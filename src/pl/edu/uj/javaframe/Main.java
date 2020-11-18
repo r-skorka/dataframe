@@ -1,5 +1,7 @@
 package pl.edu.uj.javaframe;
 
+import java.util.function.Consumer;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -12,5 +14,20 @@ public class Main {
         df.print();
 
         df.columns.get(0).values.get(0).add(new Int().create("34")).print();
+
+        df.apply(new Adder(), "kol1");
+
+        df.apply(new Applayable() {
+            @Override
+            public void apply(Series v) {
+                //asdasdasd
+            }
+        }, "kol1");
+
+
+        df.apply(v -> {
+            System.out.println("OK");
+        }, "kol1");
+
     }
 }

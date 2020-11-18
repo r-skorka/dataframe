@@ -28,6 +28,17 @@ public class DataFrame {
         }
     }
 
+    public void apply(Applayable a, String name){
+        Series s = null;
+        for(int i=0; i < columns.size(); i++){
+            if(columns.get(i).name.equals(name)){
+                s = columns.get(i);
+                break;
+            }
+        }
+        a.apply(s);
+    }
+
 
 
 }
