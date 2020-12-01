@@ -39,6 +39,27 @@ public class DataFrame {
     }
 
 
+    public DataFrame iloc(int from, int to){
+        Class<? extends Value>[] types = new  Class[columns.size()];
+        String[] names = new String[columns.size()];
+        for(int i = 0; i < columns.size();i++){
+            types[i] = columns.get(i).type;
+            names[i] = columns.get(i).name;
+        }
+
+        DataFrame result = new DataFrame(types, names);
+
+        for(int i=from; i < to; i++){
+            String[] vals = new String[columns.size()];
+            for(int ci = 0; ci< columns.size();ci++){
+                vals[ci] = columns.get(ci).values.get(i).toString();
+            }
+            result.addRow(vals);
+        }
+        return result;
+    }
+
+
     public static DataFrame readCSV(String path,Class<? extends Value>[] types) throws IOException {
         FileInputStream fstream = new FileInputStream(path);
         BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
@@ -74,6 +95,47 @@ public class DataFrame {
             }
         }
         a.apply(s);
+    }
+
+    public void apply(Applayable a, String name, int njobs){
+        Series s = null;
+        for(int i=0; i < columns.size(); i++){
+            if(columns.get(i).name.equals(name)){
+                s = columns.get(i);
+                break;
+            }
+        }
+
+        int step = this.columns.get(0).values.size()/njobs;
+        ApplayableThread [] tasks = new ApplayableThread[njobs];
+        for(int i=0,taskid=0;i<columns.get(0).values.size();i+=step,taskid++){
+            Series toApply = s.iloc(i,i+step);
+            tasks[taskid] = new ApplayableThread(toApply,a);
+        }
+        try {
+            for (ApplayableThread task : tasks) {
+                task.start();
+                task.join();
+            }
+        }catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        //TODO: zbierz wyniki
+
+    }
+
+    class ApplayableThread extends Thread{
+        Series result;
+        public ApplayableThread(Series s, Applayable task){
+            //TODO
+        }
+        @Override
+        public void run() {
+            //TODO
+            System.out.println("Obliczam");
+
+        }
     }
 
 

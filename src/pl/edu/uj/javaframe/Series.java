@@ -23,5 +23,13 @@ public class Series {
         }
     }
 
+    public Series iloc(int from, int to){
+        Series result = new Series(type, name);
+        for(int i=from;i<to&&i<this.values.size();i++){
+            result.addValue(this.values.get(i).toString());
+        }
+        return result;
+    }
+
 
 }

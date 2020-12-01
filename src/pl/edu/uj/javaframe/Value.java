@@ -7,9 +7,7 @@ abstract class Value{
 
     @Override
     public String toString() {
-        return "Value{" +
-                "value=" + value +
-                '}';
+        return value.toString();
     }
 
     public void print(){System.out.print(value.toString());}

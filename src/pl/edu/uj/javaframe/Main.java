@@ -38,6 +38,8 @@ public class Main {
             df.head();
 
             df.apply(new Adder("10"), "total");
+            df.apply(new Adder("10"), "total", 10);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
