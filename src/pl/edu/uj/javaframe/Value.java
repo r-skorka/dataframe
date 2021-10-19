@@ -12,5 +12,5 @@ abstract class Value{
         return value.toString();
     }
 
-    public void print(){System.out.print(value.toString());}
+    public void print(){System.out.print(toString());}
 }
