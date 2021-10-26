@@ -1,6 +1,7 @@
 package pl.edu.uj.javaframe;
 
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 public class Series {
@@ -15,10 +16,14 @@ public class Series {
 
     public void addValue(String value){
         try {
-            values.add(type.newInstance().create(value));
+            values.add(type.getDeclaredConstructor().newInstance().create(value));
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
             e.printStackTrace();
         }
     }
