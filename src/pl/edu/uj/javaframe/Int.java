@@ -10,10 +10,14 @@ public class Int extends Value{
 
     @Override
     public Value add(Value v) {
-        Int other = (Int)v;
 
         Int result  = new Int();
-        result.value = (Integer)this.value + (Integer)other.value;
+        if(v.value instanceof Integer){
+            result.value = (Integer)this.value + (Integer)v.value;
+        }else{
+            result.value = (Integer)this.value + Double.valueOf(v.value.toString()).intValue();
+        }
+
 
         return result;
     }
