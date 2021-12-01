@@ -115,6 +115,8 @@ public class DataFrame {
         try {
             for (ApplayableThread task : tasks) {
                 task.start();
+            }
+            for (ApplayableThread task : tasks) {
                 task.join();
             }
         }catch (InterruptedException e) {
